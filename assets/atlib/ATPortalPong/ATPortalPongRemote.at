@@ -1,0 +1,46 @@
+import /.ATPortalPong.data;
+
+object:{
+	def ATPortalPongRemoteInterface := object: {
+		//Reference to the object created by makeATPortalPong, needed to access jPortalPong (java GUI)
+		def portalParent;
+		
+		def init(parent){
+			portalParent := parent;
+		};
+	
+		def win(winner){
+			portalParent.jPortalPong.win(winner, score);
+		};
+		
+		def newBall(atBall,fromId){
+			portalParent.jPortalPong.newBall(toJPortalPongBall(atBall), fromId);
+		};
+		
+		def lostBall(fromId){
+		    def name := portalParent.userNames.get(fromId);
+			portalParent.jPortalPong.newLostBall(name);
+		};
+		
+		def portalEntry(fromId){
+			portalParent.jPortalPong.portalEntry(fromId);
+		};
+		
+		def powerUp(powerup){
+			portalParent.jPortalPong.powerUp(powerup);
+		};
+		
+		def newScore(fromId,score){
+		    def name := portalParent.userNames.get(fromId);
+			portalParent.jPortalPong.newScore(name, score);
+		};
+		
+		def getID(){
+			portalParent.myID;
+		};
+		
+		def getName(){
+			portalParent.myName;
+		};
+	};
+};

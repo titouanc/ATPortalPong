@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">wePongAT</string>
+    <string name="wePongLogo">wePong Logo</string>
+    <string name="discovering">Discovering&#8230;</string>
+    <string name="playAlone">Play alone</string>
+    <string name="MultiPlayer">Multiplayer</string>
+    <string name="description">wePong is a quasi-sports game that simulates table tennis for multiple players.
+        The player controls an in-game paddle by moving it vertically across the left side of the screen, and can compete against either a computer controlled opponent or another player controlling a second paddle on the opposing side.
+        Players use the paddles to hit a ball back and forth.
+        The aim is for a player to earn more points than the opponents; points are earned when one fails to return the ball to the other.
+        The ball can be pushed to another player using a portal. A portal is a link to the field of another player, it can transmits balls and powerups.
+        Portals of opponents will appear as soon as they are playing the game on the same wireless network (i.e. using P2P technology).
+        [Wikipedia]
+        </string>
+
+</resources>

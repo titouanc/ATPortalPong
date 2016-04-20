@@ -1,0 +1,53 @@
+import /.ATPortalPong.ATPortalPongLocal;
+import /.ATPortalPong.ATPortalPongRemote;
+import /.at.lang.futures;
+enableFutures(false);
+
+deftype Ponger;
+
+def makeATPortalPong(){
+	object:{
+	   def log(text) {
+		  Android.Log.v("weScribble", text);
+		};
+		//Device id provided by Java through local interface
+		def myID;
+		//User name provided by Java through local interface
+		def myName;
+		//HashMap of [userId,Far Reference]
+		def users := jlobby.java.util.HashMap.new();
+		def userNames := jlobby.java.util.HashMap.new();
+		//Array of far references, avoids iterating over hashmap
+		def userReferences := [];
+		//Local interface for android gui
+		def local := ATPortalPongLocalInterface.new(self);
+		//Remote interface for other AT actors
+		def remote := ATPortalPongRemoteInterface.new(self);
+		
+		def jPortalPong := Android.parent.registerATApp(local);
+		
+		def discoverUser(other){
+		    when: other<-getID()@FutureMessage becomes: {|id|
+		        when: other<-getName()@FutureMessage becomes: {|name|
+		            jPortalPong.newPlayer(id, name);
+		            log("Discovered " + name);
+		            userNames.put(id, name);
+		        };
+		        users.put(id, other);
+                jPortalPong.spawnPortal(id);
+            };
+		    userReferences := userReferences + [other];
+		};
+	
+        def goOnline() {
+		    deftype AnAwesomePortalPong;
+		    export: remote as: AnAwesomePortalPong;
+		    whenever: AnAwesomePortalPong discovered: {|other| discoverUser(other)};
+		};
+		
+	    goOnline();
+	};
+};
+system.println("ATPortalPong started");
+network.online();
+self;

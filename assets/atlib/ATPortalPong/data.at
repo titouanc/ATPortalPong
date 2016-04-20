@@ -1,0 +1,22 @@
+object:{
+	def JJBall := jlobby.edu.vub.portalpong.objects.Ball;
+	
+	def atBall := isolate: {
+	   def x;
+	   def y;
+	   def radius;
+	   def owner;
+	   
+	   def init(jBall){
+	       x := jBall.x;
+	       y := jBall.y;
+	       radius := jBall.radius;
+	       owner := jBall.owner;
+	   };
+	};
+	
+	def toJPortalPongBall(atBall){
+	   JJBall.new(atBall.x, atBall.y, atBall.radius, atBall.owner);
+	};
+
+};

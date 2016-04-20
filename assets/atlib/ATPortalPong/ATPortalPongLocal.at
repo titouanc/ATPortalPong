@@ -1,0 +1,61 @@
+import /.ATPortalPong.data;
+
+object:{
+	def ATPortalPongLocalInterface := object:{
+		//Reference to the object created by makeATPortalPong, needed to set and get ID and userName
+		def portalParent;
+		
+		def init(pp){
+			portalParent := pp;
+		};
+		
+		//Methods called by Java
+
+		def setID(id){
+			portalParent.myID := id;
+		};
+		
+		def setName(userName){
+			portalParent.myName := userName;
+		};
+		
+		def stop(){
+			//...
+		};
+		
+		def sendLostBall(fromId){
+			portalParent.userReferences.each: {|ref|
+                ref<-lostBall(fromId);
+            };
+		};
+		
+		def sendBallMessage(portalOwnerId,ball,fromId){
+			def userRef := portalParent.users.get(portalOwnerId);
+			userRef<-newBall(atBall.new(ball), fromId);
+		};
+		
+		def sendPortalEntry(portalOwnerId,fromId){
+            def userRef := portalParent.users.get(portalOwnerId);
+            userRef<-portalEntry(fromId);
+		};
+		
+		def sendPowerUp(portalOwnerId,powerup){
+            def userRef := portalParent.users.get(portalOwnerId);
+            userRef<-powerUp(powerup);
+		};
+		
+		
+		def sendWin(fromId){
+            portalParent.userReferences.each: {|ref|
+                ref<-win(fromId);
+            };
+		};
+		
+		def sendNewScore(fromId, score){
+			portalParent.userReferences.each: {|ref|
+			    ref<-newScore(fromId, score);
+			};
+		};
+
+	};	
+};
